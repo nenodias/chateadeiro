@@ -115,9 +115,7 @@ def shutdown(server):
 
 if __name__ == '__main__':
     parse_command_line()
-    port = os.environ.get("PORT", 8000)
-    if not port:
-        port = options.port
+    port = os.environ.get("PORT", options.port)
     application = ChatApplication("{}:{}".format(options.host, port) )
     server = HTTPServer(application)
     server.listen(port)
