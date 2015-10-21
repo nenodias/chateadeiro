@@ -115,10 +115,13 @@ def shutdown(server):
 
 if __name__ == '__main__':
     parse_command_line()
-    application = ChatApplication("{}:{}".format(options.host, options.port) )
+    port = os.environ.get("PORT", 8000)
+    if not port:
+        port = options.port
+    application = ChatApplication("{}:{}".format(options.host, port) )
     server = HTTPServer(application)
-    server.listen(options.port)
+    server.listen(port)
     signal.signal(signal.SIGINT, lambda sig, frame: shutdown(server) )
-    logging.info('Starting server on localhost:{}'.format(options.port))
+    logging.info('Starting server on localhost:{}'.format(port))
     IOLoop.instance().start()
 
