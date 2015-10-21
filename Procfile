@@ -1,1 +1,1 @@
-web: python-3.3.2 run.py --host=chateadeiro.herokuapp.com
+web: python-3.5.0 main.py --port=$PORT --host=chateadeiro.herokuapp.com
