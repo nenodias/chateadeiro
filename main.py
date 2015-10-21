@@ -55,7 +55,7 @@ class IndexHandler(RequestHandler):
     '''Trata renderização do cliente'''
 
     def get(self):
-        return self.write(application.loader.load("index.html").generate(host=application.host) )
+        return self.write(self.application.loader.load("index.html").generate(host=self.application.host) )
 
 
 
