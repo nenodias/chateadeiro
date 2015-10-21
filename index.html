@@ -15,7 +15,8 @@
           usuario = prompt("Qual seu nome:", "");
       }
       var socket = socket = new WebSocket('ws://'+location.host+'/1');
-      socke = onerror = funtion(evento){
+      socket = onerror = function(evento){
+        console.log(evento);
         socket = new WebSocket('wss://'+location.host+'/1');
       }
       socket.onopen = function(){
