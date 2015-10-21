@@ -16,9 +16,9 @@
       }
       var socket;
       try{
-        socket = new WebSocket('ws://'+location.host+'/1');
-      }catch(ex){
         socket = new WebSocket('wss://'+location.host+'/1');
+      }catch(ex){
+        socket = new WebSocket('ws://'+location.host+'/1');
       }
       socket.onopen = function(){
         console.log('Conexão foi aberta!');
