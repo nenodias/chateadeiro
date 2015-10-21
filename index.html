@@ -14,7 +14,7 @@
       while (usuario == null) {
           usuario = prompt("Qual seu nome:", "");
       }
-      var socket = new WebSocket('ws://'+location.host+'/1');
+      var socket = new WebSocket('ws://'+window.location.host+'/1');
       socket.onopen = function(){
         console.log('Conexão foi aberta!');
       }
