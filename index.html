@@ -14,10 +14,10 @@
       while (usuario == null) {
           usuario = prompt("Qual seu nome:", "");
       }
-      var socket = new WebSocket('ws://'+location.host+'/1');
-      socket = onerror = function(evento){
-        console.log(evento);
-        socket = new WebSocket('wss://'+location.host+'/1');
+      var socket;
+      socket = new WebSocket('wss://'+location.host+'/1');
+      socket.onerror = function(evento){
+        console.log('Conexão foi aberta!');
       }
       socket.onopen = function(){
         console.log('Conexão foi aberta!');
@@ -39,20 +39,6 @@
         document.title = "Ok - Meu Client WebSocket";
         mensagens = 0;
       }
-      /*
-      var WebSocket = require('ws');
-      var ws = new WebSocket('ws://www.host.com/path');
-
-      ws.on('open', function open() {
-        var array = new Float32Array(5);
-
-        for (var i = 0; i < array.length; ++i) {
-          array[i] = i / 2;
-        }
-
-        ws.send(array, { binary: true, mask: true });
-      });
-      */
     </script>
   </body>
 </html>
