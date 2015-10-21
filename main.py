@@ -17,10 +17,8 @@ from tornado.websocket import WebSocketHandler, WebSocketClosedError
 import banco
 
 define('debug', default=False, type=bool, help='Run in debug mode')
-define('port', default=8000, type=int, help='Server port')
+define('port', default='8000', type=str, help='Server port')
 define('host', default='127.0.0.1', type=str, help='Server Host')
-
-
 
 
 class MessageHandler(WebSocketHandler):
@@ -113,8 +111,12 @@ def shutdown(server):
     ioloop.add_timeout(time.time() + 1.5, finalize)
 
 
-def main():
-    port = int(os.environ.get("PORT", options.port))
+if __name__ == "__main__":
+    parse_command_line()
+    if not options.port:
+        options.port = '8000'
+    port = os.environ.get("PORT", options.port)
+    port = int(port)
     print(port)
     application = ChatApplication("{}:{}".format(options.host, port) )
     server = HTTPServer(application)
@@ -122,8 +124,4 @@ def main():
     signal.signal(signal.SIGINT, lambda sig, frame: shutdown(server) )
     logging.info('Starting server on localhost:{}'.format(port))
     IOLoop.instance().start()
-
-if __name__ == "__main__":
-    parse_command_line()
-    main()
 
