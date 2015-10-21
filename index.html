@@ -15,7 +15,10 @@
           usuario = prompt("Qual seu nome:", "");
       }
       var socket;
+      // Usando Conexão segura
       socket = new WebSocket('wss://'+location.host+'/1');
+      // Não usando Conexão segura
+      //socket = new WebSocket('ws://'+location.host+'/1');
       socket.onerror = function(evento){
         console.log('Conexão foi aberta!');
       }
