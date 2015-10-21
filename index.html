@@ -14,7 +14,7 @@
       while (usuario == null) {
           usuario = prompt("Qual seu nome:", "");
       }
-      var socket = socket = new WebSocket('ws://'+location.host+'/1');
+      var socket = new WebSocket('ws://'+location.host+'/1');
       socket = onerror = function(evento){
         console.log(evento);
         socket = new WebSocket('wss://'+location.host+'/1');
