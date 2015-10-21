@@ -113,7 +113,7 @@ def shutdown(server):
 
 if __name__ == "__main__":
     parse_command_line()
-    application = ChatApplication("{}:{}".format(options.host, options.port) )
+    application = ChatApplication("{}".format(options.host) )
     server = HTTPServer(application)
     server.listen(options.port)
     signal.signal(signal.SIGINT, lambda sig, frame: shutdown(server) )
