@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Meu Client WebSocket</title>
+  </head>
+  <body>
+    <div id="mensagem">
+    </div>
+    <form onsubmit="return send();">
+      <input type="text" id="input" /><button type="button" onclick="send()">Enviar</button>
+    </form>
+    <script type="text/javascript">
+      var mensagens = 0;
+      var usuario = prompt("Qual seu nome:", "");
+      while (usuario == null) {
+          usuario = prompt("Qual seu nome:", "");
+      }
+      var socket = new WebSocket('ws://{{ host }}/1');
+      socket.onopen = function(){
+        console.log('Conexão foi aberta!');
+      }
+      socket.onmessage = function(mensagem){
+        console.log('Nova Mensagem:'+ mensagem.data);
+        mensagens += 1;
+        document.title = (mensagens + " - Meu Client WebSocket");
+        document.getElementById('mensagem').innerHTML += "<br />"+mensagem.data;
+      }
+      var send = function(){
+        var mensagem = document.getElementById('input').value;
+        document.getElementById('mensagem').innerHTML += "<br />"+usuario+":"+mensagem;
+        socket.send(usuario+":"+mensagem);
+        document.getElementById('input').value = "";
+        return false;
+      }
+      window.onfocus = function(){
+        document.title = "Ok - Meu Client WebSocket";
+        mensagens = 0;
+      }
+    </script>
+  </body>
+</html>
