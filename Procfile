@@ -1,1 +1,1 @@
-web: python main.py --port=$PORT --host=chateadeiro.herokuapp.com:80
+web: python main.py --port=$PORT

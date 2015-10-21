@@ -18,7 +18,6 @@ import banco
 
 
 define("port", default=8000, help="run on the given port", type=int)
-define('host', default='127.0.0.1', type=str, help='Server Host')
 
 
 class MessageHandler(WebSocketHandler):
@@ -53,7 +52,7 @@ class IndexHandler(RequestHandler):
     '''Trata renderização do cliente'''
 
     def get(self):
-        return self.write(self.application.loader.load("index.html").generate(host=self.application.host) )
+        return self.write(self.application.loader.load("index.html").generate() )
 
 
 
@@ -62,14 +61,13 @@ class IndexHandler(RequestHandler):
 
 class ChatApplication(Application):
     'Minha applicação'
-    def __init__(self, host, **kwargs):
+    def __init__(self, **kwargs):
         routes = [
             (r'/(?P<chat>[0-9]+)', MessageHandler),
             (r'/', IndexHandler),
         ]
         super().__init__(routes, **kwargs)
         self.subscriptions = defaultdict(list)
-        self.host = host
         self.loader = template.Loader(  os.getcwd() )
 
     def add_subscriber(self, channel, subscriber):
@@ -113,10 +111,7 @@ def shutdown(server):
 
 if __name__ == "__main__":
     parse_command_line()
-    port_host = options.port
-    if os.environ.get('PORT'):
-        port_host = 80
-    application = ChatApplication("{}:{}".format(options.host, port_host) )
+    application = ChatApplication()
     server = HTTPServer(application)
     server.listen(options.port)
     signal.signal(signal.SIGINT, lambda sig, frame: shutdown(server) )
