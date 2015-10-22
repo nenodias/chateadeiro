@@ -54,9 +54,9 @@ class IndexHandler(RequestHandler):
             protocol = 'wss'
         lista = banco.get_ultimas_mensagens()
         lista.reverse()
-        mensagens = ""
+        mensagens = []
         for mensagem in lista:
-            mensagens += mensagem[1] + "<br />"
+            mensagens.append(mensagem[1])
         return self.write(self.application.loader.load("index.html").generate(protocol=protocol, mensagens=mensagens) )
 
 
