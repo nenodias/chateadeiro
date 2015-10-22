@@ -5,9 +5,11 @@
   </head>
   <body>
     <div id="mensagem">
-      {% for mensagem in mensagens  %}
-        {{mensagem}}<br/>
-      {% end  %}
+      {% for mensagem in mensagens %}
+        {% block mensagem %}
+          {{ mensagem }}</br>
+        {% end %}
+      {% end %}
     </div>
     <form onsubmit="return send();">
       <input type="text" id="input" /><button type="button" onclick="send()">Enviar</button>
