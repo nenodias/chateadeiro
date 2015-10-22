@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Meu Client WebSocket</title>
+    <script type="text/javascript" src="static/reconnecting-websocket.js"></script>
   </head>
   <body>
     <div id="mensagem">
@@ -16,11 +17,12 @@
       }
       var socket;
       // Usando Conexão segura
-      socket = new WebSocket('wss://'+location.host+'/1');
+      // socket = new WebSocket('wss://'+location.host+'/1');
+      socket = new ReconnectingWebSocket('{{protocol}}://'+location.host+'/1', null, {debug: true, reconnectInterval: 3000});
       // Não usando Conexão segura
       //socket = new WebSocket('ws://'+location.host+'/1');
       socket.onerror = function(evento){
-        console.log('Conexão foi aberta!');
+        console.log(evento);
       }
       socket.onopen = function(){
         console.log('Conexão foi aberta!');

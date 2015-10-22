@@ -11,13 +11,14 @@ from tornado import template
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 from tornado.options import define, parse_command_line, options
-from tornado.web import Application, RequestHandler
+from tornado.web import Application, RequestHandler, StaticFileHandler
 from tornado.websocket import WebSocketHandler, WebSocketClosedError
 
 import banco
 
 
 define("port", default=8000, help="run on the given port", type=int)
+static_path = os.path.join(os.getcwd(), 'static')
 
 
 class MessageHandler(WebSocketHandler):
@@ -34,7 +35,7 @@ class MessageHandler(WebSocketHandler):
         lista.reverse()
         for mensagem in lista:
             self.write_message(mensagem[1])
-        
+
 
     def on_message(self, message):
         '''Faz o broadcast das atualizações para outros clientes interessados'''
@@ -52,7 +53,10 @@ class IndexHandler(RequestHandler):
     '''Trata renderização do cliente'''
 
     def get(self):
-        return self.write(self.application.loader.load("index.html").generate() )
+        protocol = 'ws'
+        if os.environ.get('PORT'):
+            protocol = 'wss'
+        return self.write(self.application.loader.load("index.html").generate(protocol=protocol) )
 
 
 
@@ -64,6 +68,7 @@ class ChatApplication(Application):
     def __init__(self, **kwargs):
         routes = [
             (r'/(?P<chat>[0-9]+)', MessageHandler),
+            (r'/static/(.*)', StaticFileHandler, {'path': static_path}),
             (r'/', IndexHandler),
         ]
         super().__init__(routes, **kwargs)
@@ -117,4 +122,3 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, lambda sig, frame: shutdown(server) )
     logging.info('Starting server on localhost:{}'.format(options.port))
     IOLoop.instance().start()
-
