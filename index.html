@@ -46,7 +46,7 @@
       var socket;
       // Usando Conexão segura
       // socket = new WebSocket('wss://'+location.host+'/1');
-      socket = new ReconnectingWebSocket('{{protocol}}://'+location.host+'/1', null, {debug: true, reconnectInterval: 3000});
+      socket = new ReconnectingWebSocket('{{protocol}}://'+location.host+'/1', null, {debug: true, reconnectInterval: 1500});
       // Não usando Conexão segura
       //socket = new WebSocket('ws://'+location.host+'/1');
       socket.onerror = function(evento){
