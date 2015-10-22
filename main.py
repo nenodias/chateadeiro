@@ -31,10 +31,6 @@ class MessageHandler(WebSocketHandler):
         '''Registra-se para receber atualizações de chat em uma nova camada'''
         self.chat = chat
         self.application.add_subscriber(self.chat, self)
-        lista = banco.get_ultimas_mensagens()
-        lista.reverse()
-        for mensagem in lista:
-            self.write_message(mensagem[1])
 
 
     def on_message(self, message):
@@ -56,7 +52,12 @@ class IndexHandler(RequestHandler):
         protocol = 'ws'
         if os.environ.get('PORT'):
             protocol = 'wss'
-        return self.write(self.application.loader.load("index.html").generate(protocol=protocol) )
+        lista = banco.get_ultimas_mensagens()
+        lista.reverse()
+        mensagens = ""
+        for mensagem in lista:
+            mensagens += mensagem[1] + "<br />"
+        return self.write(self.application.loader.load("index.html").generate(protocol=protocol, mensagens=mensagens) )
 
 
 
