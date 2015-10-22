@@ -1,16 +1,30 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>Meu Client WebSocket</title>
-    <script type="text/javascript" src="static/reconnecting-websocket.js"></script>
+    <meta name="description" content="chateadeiro">
+    <meta name="author" content="Horácio Dias">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="static/css/normalize.css">
+    <link rel="stylesheet" href="static/css/skeleton.css">
+
+    <link rel="icon" type="static/image/png" href="images/favicon.png">
+
+    <script type="text/javascript" src="static/js/reconnecting-websocket.js"></script>
   </head>
   <body>
-    <div id="mensagem">
-      {% for mensagem in mensagens %}
-        {% block mensagem %}
-          {{ mensagem }}</br>
+    <div class="container">
+      <div id="mensagem" class="row">
+        {% for mensagem in mensagens %}
+          {% block mensagem %}
+            {{ mensagem }}</br>
+          {% end %}
         {% end %}
-      {% end %}
-    </div>
+      </div>
     <form onsubmit="return send();">
       <input type="text" id="input" /><button type="button" onclick="send()">Enviar</button>
     </form>
