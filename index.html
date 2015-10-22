@@ -26,7 +26,11 @@
         {% end %}
       </div>
     <form onsubmit="return send();">
-      <input type="text" id="input" /><button type="button" onclick="send()">Enviar</button>
+      <div class="row">
+        <div class="six columns">
+          <input type="text" id="input" /><button type="button" onclick="send()">Enviar</button>
+        </div>
+      </div>
     </form>
     <script type="text/javascript">
       var mensagens = 0;
